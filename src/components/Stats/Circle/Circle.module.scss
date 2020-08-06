@@ -1,0 +1,20 @@
+
+
+.circleLabel {
+    transform: translateY(0.25em);
+}
+
+.circlePercentage {
+    font-size: 0.4em;
+    line-height: 1;
+    text-anchor: middle;
+    fill: var(--primary);
+    transform: translateY(-0.25em);
+}
+
+.circleText {
+    font-size: 0.2em;
+    text-transform: uppercase;
+    text-anchor: middle;
+    transform: translateY(0.7em);
+}

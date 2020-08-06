@@ -1,0 +1,19 @@
+
+
+.income {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.datePicker{
+    width: 100%;
+    background-color:  var(--secondary);
+    border: 1px solid #4a4c4f ;
+    height: 40px;
+    width: 100%;
+    padding: 5px;
+    outline: none;
+}

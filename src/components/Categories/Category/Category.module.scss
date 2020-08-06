@@ -1,0 +1,11 @@
+
+.Category {
+  background: var(--lightPrimary);
+  height: 150px;
+  width:150px;
+  padding : 20px;
+  margin: 15px;
+  border-radius : 4px;
+  display: flex;
+  flex-direction: column;;
+}

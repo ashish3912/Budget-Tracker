@@ -1,0 +1,17 @@
+@import '../../mixins.scss' ;
+
+.main {
+    margin-right: 400px;
+    padding: 0 50px;
+    padding-bottom: 20px;
+
+    @include respond-to(medium-small-screens) { 
+       margin-right: 0;
+    }
+
+    @include respond-to(small-screens) { 
+      margin-right: 0;
+      padding: 0 10px;
+      padding-bottom: 20px;
+   }
+}

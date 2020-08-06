@@ -1,0 +1,31 @@
+.transaction{
+    background:var(--lightPrimary);
+    border-radius: 6px;
+    padding: 30px;
+    margin:  10px 0px;
+}
+
+.sortButton {
+    padding: 8px;
+    border-radius: 20px;
+    min-width: 100px;
+    outline: none;
+    background: transparent;
+    border: 1px solid #4a4c4f;
+    margin: 3px;
+    color: var(--primary)
+}
+
+.searchBar {
+   border : 0;
+   border-bottom : 1px solid #4a4c4f; 
+}
+
+.AddTransaction {
+  background: transparent;
+  border: 1px solid #4a4c4f ;
+}
+
+
+
+  

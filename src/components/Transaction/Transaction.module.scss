@@ -1,0 +1,23 @@
+@import '../../mixins.scss' ;
+
+.category-image {
+    height: 45px;
+}
+
+.transaction{
+    background:var(--lightPrimary);
+    border-radius: 6px;
+    padding: 30px;
+    margin-top:  10px ;
+    @include respond-to(small-screens) { 
+        padding: 10px;
+     }
+}
+
+.deleteButton{
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    color: red;
+    font-size: 18px;
+}

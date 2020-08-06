@@ -1,0 +1,14 @@
+@import '../../mixins.scss' ;
+
+.container {
+    background: var(--lightPrimary);
+    padding: 30px;
+    border-radius: 6px;
+    width: 500px;
+    margin: 30px auto;
+
+    @include respond-to(small-screens) { 
+        width : 100%;
+        padding: 10px;
+    }
+}
