@@ -19,6 +19,13 @@ export default (state, action) => {
        ...state,
        details: {...action.payload}
      }
+
+     case "EDIT_TRANSACTION":
+      return {
+        ...state,
+        transactions:state.transactions.map(transaction => transaction.id === action.payload.id ? action.payload : transaction )
+    };
+     
   
       default:
         return state;

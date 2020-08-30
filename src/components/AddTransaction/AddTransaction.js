@@ -1,22 +1,22 @@
 import React, { useState, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { GlobalContext } from "../../context/GlobalState";
-import { DatePicker } from 'antd';
-import Modal from '../UI/Modal/Modal'
+import { DatePicker,message,Modal } from 'antd';
 import classes from './AddTransaction.module.scss'
 
 
-
+ 
 const AddTransaction = ({addClick,handler}) => {
-  const { addTransaction } = useContext(GlobalContext);
+  const { addTransaction,transactions,details } = useContext(GlobalContext);
 
   const [transaction, setTransaction] = useState({
     transactionText: "",
-    transactionAmount: 0,
+    transactionAmount: "",
     transactionCategory:"",
     transactionDate: ""
   });
   
+  const totalAmount=transactions.reduce( function(cnt,o){ return cnt + o.transactionAmount; }, 0);
 
 
   const { transactionText, transactionAmount, transactionCategory, transactionDate } = transaction;
@@ -27,14 +27,14 @@ const AddTransaction = ({addClick,handler}) => {
   };
 
   const onChangeDate = (momemt,date) => {
-    setTransaction({ ...transaction, ['transactionDate']: date });
-  };
+    setTransaction({ ...transaction, 'transactionDate': date });
+  };  
 
   const modalClosed = () => {
     handler(false)
     setTransaction({
       transactionText: "",
-      transactionAmount: 0,
+      transactionAmount: "",
       transactionCategory:"",
       transactionDate: ""
     });
@@ -42,33 +42,53 @@ const AddTransaction = ({addClick,handler}) => {
 
   const onSubmitTransaction = (e) => {
     e.preventDefault();
+    
 
-    if (transactionText !== "" &&  transactionCategory !== "" && transactionDate !== "") {
-      const newTransaction = {
-        id: uuidv4(),
-        transactionText,
-        transactionCategory,
-        transactionDate,
-        transactionAmount: transactionAmount * 1,
-      };
+    if (transactionText !== "" &&  transactionCategory !== "" && transactionDate !== "" && transactionAmount!=="" && details.limit>0) {
+      if(parseInt(details.limit)<(parseInt(totalAmount)+parseInt(transactionAmount)))
+      {
+        console.log(details.limit +" "+totalAmount+" "+transactionAmount)
+        
+        message.error("You have crossed your monthly limit, Please increase your limit to add transactions.")
+        handler(false)
+      }
+      else{
+            const newTransaction = {
+              id: uuidv4(),
+              transactionText,
+              transactionCategory,
+              transactionDate,
+              transactionAmount: transactionAmount * 1,
+            };
+            console.log(newTransaction);
 
-      addTransaction(newTransaction);
-      setTransaction({
-        transactionText: "",
-        transactionAmount: 0,
-        transactionCategory:"",
-        transactionDate: ""
-      });
-      handler(false)
+            addTransaction(newTransaction);
+            setTransaction({
+              transactionText: "",
+              transactionAmount: "",
+              transactionCategory:"",
+              transactionDate: ""
+            });
+            handler(false)
+          }
     }
+    else if(transactionText === "" ||  transactionCategory === "" || transactionDate === "" || transactionAmount===""){
+      message.error("Please fill all the fields to create a Transaction.")
+      }
+      else
+      {
+        message.error("Please fill the details in the Details section to start creating Transactions")
+        handler(false)
+      }
   };
   
 
 
   return (
-      <Modal show={addClick} modalClosed={modalClosed} >
+       <Modal className={classes.customModal} visible={addClick} onOk={onSubmitTransaction} onCancel={modalClosed} modalClosed={modalClosed}>
         <div>
           <form onSubmit={onSubmitTransaction}>
+            <h1 className={classes.headerText}> Add Transaction</h1>
             <div className={classes.income}>
               <input
                 className="m-2"
@@ -97,7 +117,7 @@ const AddTransaction = ({addClick,handler}) => {
               
               <DatePicker  className={`${classes.datePicker} m-2`} name='transactionAmount' onChange={onChangeDate}/>
 
-              <input className="mt-3" type="submit" value="Submit" />
+              {/* <input className="mt-3" type="submit" value="Submit" /> */}
             </div>
           </form>
         </div>

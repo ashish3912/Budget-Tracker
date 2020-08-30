@@ -4,11 +4,10 @@ import AddTransaction from '../../components/AddTransaction/AddTransaction'
 import { GlobalContext } from "../../context/GlobalState";
 import classes from './Finance.module.scss';
 import { compareValues } from '../../shared/utility';
-
-
+import {Popover, Button,Select} from 'antd';
 
 const Finance = () =>  {
-    const { transactions } = useContext(GlobalContext);
+    const { transactions,details } = useContext(GlobalContext);
     const [ filteredTransactions, setFilteredTranscations ]  =   useState(transactions);
     const [ search, setSearch ] = useState("");
     const [ sort, setSort ] = useState("");
@@ -28,6 +27,22 @@ const Finance = () =>  {
    },[sort,transactions])
 
   
+    const totalAmount=transactions.reduce( function(cnt,o){ return cnt + o.transactionAmount; }, 0);
+
+    
+    const content=(
+        <div> 
+            <p>Limit: ₹{details.limit}</p>
+            <p>Total Spent: ₹{totalAmount}</p>
+            <p> Balance Left: ₹{details.limit-totalAmount}</p>
+        </div>
+     );
+
+    const { Option } = Select;
+
+    function handleChange(value) {
+        setSort(value);
+        }
 
     const Transactions = filteredTransactions.length ? filteredTransactions.map(transaction => (
         <Transaction 
@@ -55,10 +70,25 @@ const Finance = () =>  {
             />
             </div>
             <div className="d-flex justify-content-between"> 
-                <button className={classes.sortButton} onClick={ ()=> setAddTransaction(true) }>Add transaction</button>
-                <div>
-                    <button className={classes.sortButton}  onClick={()=> setSort('transactionAmount')}>Amount</button>
-                    <button className={classes.sortButton} onClick={()=> setSort('transactionText')}>Name</button>
+                <Button ghost type="primary" onClick={ ()=> setAddTransaction(true) }>Add transaction</Button>
+                <Popover
+                        trigger="hover"
+                        title="Balance Details"
+                        content={content}
+                >
+                    <Button type="primary" ghost>Balance Left : ₹{details.limit-totalAmount}</Button>
+                </Popover >
+                {/* <div>
+                    <Button type="primary" ghost   onClick={()=> setSort('transactionDate')}>Date</Button>
+                    </div> */}
+                    <div>
+                    <Select className={classes.customSelect} defaultValue="Sort by" style={{ width: 120 }} onChange={handleChange} >
+                        
+                    <Option value="transactionName">Name</Option>
+                        <Option value="transactionDate">Date</Option>
+                        <Option value="transactionAmount">Amount</Option>
+                        <Option value="transactionCategory">Category</Option>
+                    </Select>
                 </div>
             </div>
             <div className="mt-4">

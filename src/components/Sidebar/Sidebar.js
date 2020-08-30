@@ -2,6 +2,7 @@ import React from 'react';
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import SidebarList from '../SidebarList/SidebarList'
 import classes from './Sidebar.module.scss';
+import AddCategory from './AddCategory/AddCategory'
 
 const sidebar = () => (
     <div id="sidebar" className={classes.sidebar} >
@@ -10,6 +11,7 @@ const sidebar = () => (
           <ThemeToggle/> 
         </div>
        <SidebarList/>
+       {/* <AddCategory/> */}
     </div>
 );
 
