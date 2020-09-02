@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../context/GlobalState";
 import classes from './PersonalDetails.module.scss';
+import { message } from 'antd';
 
 const AddDetails = () => {
 
@@ -12,13 +13,29 @@ const AddDetails = () => {
   });
 
   const onChangeDetails = (e) => {
-    setDetails({ ...newDetails, [e.target.name]: e.target.value });
-    console.log(newDetails)
+    setDetails({ ...newDetails, [e.target.name]: e.target.value });   
   };
+
+  const checkValid = (newDetails) =>{
+    console.log(" income:"+" "+newDetails.income+"< limit :"+newDetails.limit)
+    if(newDetails.income === "" || newDetails.limit === "" || newDetails.income === undefined || newDetails.limit === undefined)
+      {
+          message.error('Please enter valid details.');
+      }
+    else if(parseInt(newDetails.income) < parseInt(newDetails.limit))
+          {
+              message.error('Income cannot be less than your monthly limit.');
+          }
+    else
+        {
+            updateDetails(newDetails);
+            message.success('Your details are submitted successfully')
+        }
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();
-    updateDetails(newDetails);   
+    checkValid(newDetails);
   };
 
   return (

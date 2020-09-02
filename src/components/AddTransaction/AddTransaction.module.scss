@@ -7,6 +7,11 @@
     justify-content: center;
 }
 
+.headerText{
+    padding-bottom: 20px;
+    text-align: center;
+}
+
 
 .datePicker{
     width: 100%;
@@ -16,4 +21,21 @@
     width: 100%;
     padding: 5px;
     outline: none;
+}
+
+:global{
+    div[class*='ant']{
+        background-color:  var(--secondary);
+        color:var(--primary) !important;
+    }
+
+    .ant-modal-wrap{
+        background-color:  transparent !important;
+    }
+
+    .ant-select-item-option-active{
+        background-color:  var(--secondary) !important;
+        color:var(--primary) !important;
+    }
+
 }
